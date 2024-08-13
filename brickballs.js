@@ -38,12 +38,10 @@ document.addEventListener("keydown", function (e) {
 function moveBall() {
   ballX += moveball * ballXDirection;
   ballY += moveball * ballYDirection;
-  // Ball bounces top wall
   if (ballY <= 0) {
     ballYDirection *= -1;
     console.log("Ball bounced on top");
   }
-  // Ball bounces bottom
   if (ballY + ball.clientHeight >= innerdiv.clientHeight) {
     console.log("Ball hit bottom, Game Over");
     alert("Game Over");
@@ -57,11 +55,11 @@ function moveBall() {
   // Ball bounces on bar
   if (
     ballY + ball.clientHeight >=
-    innerdiv.clientHeight - bar.clientHeight - 5 && // 5px buffer
+    innerdiv.clientHeight - bar.clientHeight - 1 &&
     ballX + ball.clientWidth >= barX &&
     ballX <= barX + bar.clientWidth
   ) {
-    ballYDirection *= -1;
+    ballYDirection *= -1; 
     console.log("Ball bounced on bar");
   }
   // Ball and brick
@@ -76,7 +74,7 @@ function moveBall() {
     ) {
       brick.style.visibility = "hidden";
       ballYDirection *= -1;
-      console.log("Ball hit a brick :", brickX, brickY);
+      console.log("Ball hit a brick :");
     }
   });
   ball.style.left = `${ballX}px`;
