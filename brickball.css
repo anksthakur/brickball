@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.outerdiv {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 60%;
+    height: 60%;
+    margin: 0 auto;
+    background-color: blue;
+}
+
+.innerdiv {
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+    position: relative;
+    overflow: hidden;
+}
+
+.bar {
+    height: 30px;
+    width: 90px;
+    background-color: aquamarine;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    border-radius: 25px;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.ball {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; 
+}
+
+.bricks {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.brick {
+    width: 80px;
+    height: 30px;
+    background-color: red;
+    border: 1px solid white;
+}
