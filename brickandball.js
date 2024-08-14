@@ -54,29 +54,39 @@ function moveBall() {
   }
   // Ball bounces on bar
   if (
-    ballY + ball.clientHeight >=
-    innerdiv.clientHeight - bar.clientHeight - 1 &&
+    ballY + ball.clientHeight >= innerdiv.clientHeight - bar.clientHeight - 1 &&
     ballX + ball.clientWidth >= barX &&
     ballX <= barX + bar.clientWidth
   ) {
-    ballYDirection *= -1; 
+    ballYDirection *= -1;
     console.log("Ball bounced on bar");
   }
   // Ball and brick
-  bricks.forEach(function (brick) {
-    let brickX = brick.offsetLeft;
-    let brickY = brick.offsetTop;
-    if (
-      ballX + ball.clientWidth >= brickX &&
-      ballX <= brickX + brick.clientWidth &&
-      ballY + ball.clientHeight >= brickY &&
-      ballY <= brickY + brick.clientHeight
-    ) {
-      brick.style.visibility = "hidden";
-      ballYDirection *= -1;
-      console.log("Ball hit a brick :");
-    }
-  });
+    let hiddenbrick = true;
+    bricks.forEach(function (brick) {
+      let brickX = brick.offsetLeft;
+      let brickY = brick.offsetTop;
+      if (
+        ballX + ball.clientWidth >= brickX &&
+        ballX <= brickX + brick.clientWidth &&
+        ballY + ball.clientHeight >= brickY &&
+        ballY <= brickY + brick.clientHeight &&
+        brick.style.visibility !== "hidden"
+      ) {
+        brick.style.visibility = "hidden";
+        ballYDirection *= -1;
+        console.log("Ball hit a brick :");
+      }
+      if (brick.style.visibility !== "hidden") {
+       hiddenbrick = false;
+      }
+    });
+   if(hiddenbrick){
+    alert("you are the winner")
+    clearInterval(gameInterval);
+    return ;
+   }
+  
   ball.style.left = `${ballX}px`;
   ball.style.top = `${ballY}px`;
 }
