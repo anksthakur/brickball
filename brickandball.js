@@ -14,9 +14,8 @@ let ballYDirection = 1;
 
 bar.style.left = `${barX}px`;
 ball.style.left = `${ballX}px`;
-ball.style.top = `${ballY}px`;
+ball.style.top = `${ballY}px`; 
 
-// Move bar
 document.addEventListener("keydown", function (e) {
   if (e.key === "ArrowLeft") {
     if (barX - movebar > 0) {
@@ -34,34 +33,54 @@ document.addEventListener("keydown", function (e) {
   bar.style.left = `${barX}px`;
 });
 
-// Move ball
 function moveBall() {
   ballX += moveball * ballXDirection;
   ballY += moveball * ballYDirection;
+
+  ballTop();
+  ballBottom();
+  ballLR();
+  ballBounce();
+  ballBrick();
+
+  ball.style.left = `${ballX}px`;
+  ball.style.top = `${ballY}px`;
+}
+
+function ballTop(){
   if (ballY <= 0) {
     ballYDirection *= -1;
     console.log("Ball bounced on top");
   }
-  if (ballY + ball.clientHeight >= innerdiv.clientHeight) {
-    console.log("Ball hit bottom, Game Over");
-    alert("Game Over");
-    clearInterval(gameInterval);
-    return;
+}
+
+  function ballBottom(){
+    if (ballY + ball.clientHeight >= innerdiv.clientHeight) {
+      console.log("Ball hit bottom");
+      alert("Game Over");
+      clearInterval(gameInterval);
+      return;
+    }
   }
-  // Ball bounces left right
-  if (ballX <= 0 || ballX + ball.clientWidth >= innerdiv.clientWidth) {
-    ballXDirection *= -1;
+  
+  function ballLR(){
+    if (ballX <= 0 || ballX + ball.clientWidth >= innerdiv.clientWidth) {
+      ballXDirection *= -1;
+    }
   }
-  // Ball bounces on bar
-  if (
-    ballY + ball.clientHeight >= innerdiv.clientHeight - bar.clientHeight - 1 &&
-    ballX + ball.clientWidth >= barX &&
-    ballX <= barX + bar.clientWidth
-  ) {
-    ballYDirection *= -1;
-    console.log("Ball bounced on bar");
+
+  function ballBounce(){
+    if (
+      ballY + ball.clientHeight >= innerdiv.clientHeight - bar.clientHeight - 1 &&
+      ballX + ball.clientWidth >= barX &&
+      ballX <= barX + bar.clientWidth
+    ) {
+      ballYDirection *= -1;
+      console.log("Ball bounced on bar");
+    }
   }
-  // Ball and brick
+  
+  function ballBrick(){
     let hiddenbrick = true;
     bricks.forEach(function (brick) {
       let brickX = brick.offsetLeft;
@@ -75,7 +94,7 @@ function moveBall() {
       ) {
         brick.style.visibility = "hidden";
         ballYDirection *= -1;
-        console.log("Ball hit a brick :");
+        console.log("Ball hit a brick");
       }
       if (brick.style.visibility !== "hidden") {
        hiddenbrick = false;
@@ -86,8 +105,6 @@ function moveBall() {
     clearInterval(gameInterval);
     return ;
    }
+  }
   
-  ball.style.left = `${ballX}px`;
-  ball.style.top = `${ballY}px`;
-}
 let gameInterval = setInterval(moveBall, 16);
